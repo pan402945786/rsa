@@ -36,6 +36,7 @@ public:
 	CString edit_1;
 	afx_msg void OnCbnSelchangeCombo1();
 	CString RateSelect;
+	size_t N;
 	afx_msg void OnBnClickedButtonEncpt();
 	afx_msg void OnBnClickedButtonDecpt();
 };
