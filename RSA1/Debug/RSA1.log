@@ -1,3 +1,5 @@
 ﻿  RSA1Dlg.cpp
-  RSA1.vcxproj -> C:\Users\Hainan\documents\visual studio 2015\Projects\RSA1\Debug\RSA1.exe
-  RSA1.vcxproj -> C:\Users\Hainan\documents\visual studio 2015\Projects\RSA1\Debug\RSA1.pdb (Partial PDB)
+c:\users\panhainan\documents\visual studio 2015\projects\rsa\rsa1\rsa1dlg.cpp(367): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+c:\users\panhainan\documents\visual studio 2015\projects\rsa\rsa1\rsa1dlg.cpp(390): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+  RSA1.vcxproj -> C:\Users\panhainan\Documents\Visual Studio 2015\Projects\rsa\Debug\RSA1.exe
+  RSA1.vcxproj -> C:\Users\panhainan\Documents\Visual Studio 2015\Projects\rsa\Debug\RSA1.pdb (Partial PDB)

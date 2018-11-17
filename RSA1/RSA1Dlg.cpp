@@ -333,7 +333,7 @@ void CRSA1Dlg::OnClickedButton1()
 	size_t phi_n = (p - 1)*(q - 1);
 
 	// 选取公钥
-	size_t e = 255;
+	size_t e = 65537;
 	str.Format(_T("%d"), e);
 	pBoxOne->SetWindowText(str);
 
@@ -341,27 +341,54 @@ void CRSA1Dlg::OnClickedButton1()
 	int x, y;
 	exgcd(x, y, e, phi_n);
 	size_t d = x;
+	pubKey = e;
+	priKey = d;
 	str.Format(_T("%d"), d);
 	pBoxTwo->SetWindowText(str);
-	str.Format(_T("%d"), phi_n);
-	pBoxThree->SetWindowText(str);
 }
 
 
 
 void CRSA1Dlg::OnBnClickedButtonEncpt()
 {
-	// 获取公钥和n
+	// 获取明文
+	CEdit* pBoxThree;
+	CEdit* pBoxFour;
+	CString str;
+	int c;
+	pBoxThree = (CEdit*)GetDlgItem(IDC_EDIT3);
+	pBoxFour = (CEdit*)GetDlgItem(IDC_EDIT4);
+
+	// 把明文转换为数字
+	pBoxThree->GetWindowText(str);
+	int m = _wtoi(str);
 
 	// 加密
-
+	c = pow(m, pubKey);
+	c = c % N;
+	str.Format(_T("%d"), c);
+	pBoxFour->SetWindowText(str);
 }
 
 
 void CRSA1Dlg::OnBnClickedButtonDecpt()
 {
-	// 获取私钥和n
+	// 获取密文
+	CEdit* pBoxThree;
+	CEdit* pBoxFour;
+	CString str;
+	CString str1;
+	int c,m;
+	pBoxThree = (CEdit*)GetDlgItem(IDC_EDIT3);
+	pBoxFour = (CEdit*)GetDlgItem(IDC_EDIT4);
+
+	// 把密文转换成数字
+	pBoxFour->GetWindowText(str);
+	c = _wtoi(str);
 
 	// 解密
-
+	m = pow(c, priKey);
+	m = m % N;
+	str1.Format(_T("%d"), m);
+	pBoxThree->SetWindowText(str1);
 }
