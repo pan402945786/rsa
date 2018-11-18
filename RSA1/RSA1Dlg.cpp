@@ -7,9 +7,17 @@
 #include "RSA1Dlg.h"
 #include "afxdialogex.h"
 
+#include <iostream>  
+#include <ctime>
+#include <cmath>
+#include <algorithm>
+
+#include <time.h>
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
+
 
 
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
@@ -185,21 +193,22 @@ void CRSA1Dlg::OnCbnSelchangeCombo1()
 
 
 // 生成伪素数
-const int MAX_ROW = 50;
-size_t Pseudoprime()
+const long long MAX_ROW = 2000;
+long long Pseudoprime(long long type)
 {
+	type = 10000;
+
 	bool ifprime = false;
-	size_t a = 0;
-	int arr[MAX_ROW];   //数组arr为{3，4，5，6...52}
-	for (int i = 0; i<MAX_ROW; ++i)
+	long long a = 0;
+	long long arr[MAX_ROW];   //数组arr为{3，4，5，6...52}
+	for (long long i = 0; i<MAX_ROW; ++i)
 	{
 		arr[i] = i + 3;
 	}
 	while (!ifprime)
 	{
-		srand((unsigned)time(0));
 		ifprime = true;
-		a = (rand() % 100) * 2 + 3; //生成一个范围在3到2003里的奇数
+		a = (rand() % type) * 2 + 3; //生成一个范围在3到20003里的奇数
 		for (int j = 0; j<MAX_ROW; ++j)
 		{
 			if (a%arr[j] == 0)
@@ -212,9 +221,9 @@ size_t Pseudoprime()
 	return a;
 }
 
-size_t  repeatMod(size_t base, size_t n, size_t mod)//模重复平方算法求(b^n)%m
+long long  repeatMod(long long base, long long n, long long mod)//模重复平方算法求(b^n)%m
 {
-	size_t a = 1;
+	long long a = 1;
 	while (n)
 	{
 		if (n & 1)
@@ -228,27 +237,27 @@ size_t  repeatMod(size_t base, size_t n, size_t mod)//模重复平方算法求(b^n)%m
 }
 
 //Miller-Rabin素数检测
-bool rabinmiller(size_t n, size_t k)
+bool rabinmiller(long long n, long long k)
 {
 
-	int s = 0;
-	int temp = n - 1;
+	long long s = 0;
+	long long temp = n - 1;
 	while ((temp & 0x1) == 0 && temp)
 	{
 		temp = temp >> 1;
 		s++;
 	}   //将n-1表示为(2^s)*t
-	size_t t = temp;
+	long long t = temp;
 
 	while (k--)  //判断k轮误判概率不大于(1/4)^k
 	{
-		srand((unsigned)time(0));
-		size_t b = rand() % (n - 2) + 2; //生成一个b(2≤a ≤n-2)
+		srand((long long)time(0));
+		long long b = rand() % (n - 2) + 2; //生成一个b(2≤a ≤n-2)
 
-		size_t y = repeatMod(b, t, n);
+		long long y = repeatMod(b, t, n);
 		if (y == 1 || y == (n - 1))
 			return true;
-		for (int j = 1; j <= (s - 1) && y != (n - 1); ++j)
+		for (long long j = 1; j <= (s - 1) && y != (n - 1); ++j)
 		{
 			y = repeatMod(y, 2, n);
 			if (y == 1)
@@ -261,7 +270,7 @@ bool rabinmiller(size_t n, size_t k)
 }
 
 
-size_t gcd(int a, int b)
+long long gcd(long long a, long long b)
 {
 	if (b == 0)
 		return a;
@@ -270,7 +279,7 @@ size_t gcd(int a, int b)
 }
 
 int xx;
-void exgcd(int &x, int& y, int a, int b)
+void exgcd(long long &x, long long& y, long long a, long long b)
 {
 	if (b == 0)
 	{
@@ -284,6 +293,19 @@ void exgcd(int &x, int& y, int a, int b)
 	y = xx - a / b*y;
 }
 
+long long Montgomery(long long base, long long exp, long long mod)
+{
+	long long res = 1;
+	while (exp)
+	{
+		if (exp & 1)
+			res = (res*base) % mod;
+		exp >>= 1;
+		base = (base*base) % mod;
+	}
+	return res;
+}
+
 
 void CRSA1Dlg::OnClickedButton1()
 {
@@ -295,58 +317,47 @@ void CRSA1Dlg::OnClickedButton1()
 	pBoxThree = (CEdit*)GetDlgItem(IDC_EDIT3);
 
 	CComboBox* comboBox = (CComboBox*)GetDlgItem(IDC_COMBO_A);
-	//赋值
-	//pBoxOne-> SetWindowText( _T("FOO ") );
-	//取值
 	CString str;
-	//pBoxOne->GetWindowText(str);
-	int i;
-	//i = euclidean_ext(1, 1, 1);
-	i = comboBox->GetCurSel();
-
-	str.Format(_T("%d"), i);
-
-	//MessageBox(_T("程序运行结果"), MB_OK);
-	//str.ReleaseBuffer();
+	long long i = 100000,type;
 
 	// 获取加密等级
-	i = comboBox->GetCurSel();
-
-
+	//type = comboBox->GetCurSel();
 
 	// 生成两个素数
-	size_t p = Pseudoprime();
-	while (!rabinmiller(p,10)) {
-		p = Pseudoprime();
+	long long p,q;
+
+	p = Pseudoprime(i);
+	while (!rabinmiller(p, 10)) {
+		p = Pseudoprime(i);
 	}
-	size_t q = Pseudoprime();
+
+	q = Pseudoprime(i);
 	while (!rabinmiller(q,10)) {
-		q = Pseudoprime();
+		q = Pseudoprime(i);
 	}
 
 	// 计算n
-	size_t n = p*q;
+	long long n = p*q;
 	N = n;
 
 	// 计算欧拉函数
-
-	size_t phi_n = (p - 1)*(q - 1);
-
+	long long phi_n = (p - 1)*(q - 1);
+	
 	// 选取公钥
-	size_t e = 65537;
-	str.Format(_T("%d"), e);
-	pBoxOne->SetWindowText(str);
+	long long e = 65537;
 
 	// 扩展欧几里得计算私钥
-	int x, y;
+	long long x, y;
 	exgcd(x, y, e, phi_n);
-	size_t d = x;
+	if (x < 0) x += phi_n;
+	long long d = x;
 	pubKey = e;
 	priKey = d;
+	str.Format(_T("%d"), e);
+	pBoxOne->SetWindowText(str);
 	str.Format(_T("%d"), d);
 	pBoxTwo->SetWindowText(str);
 }
-
 
 
 void CRSA1Dlg::OnBnClickedButtonEncpt()
@@ -355,17 +366,16 @@ void CRSA1Dlg::OnBnClickedButtonEncpt()
 	CEdit* pBoxThree;
 	CEdit* pBoxFour;
 	CString str;
-	int c;
+	long long c;
 	pBoxThree = (CEdit*)GetDlgItem(IDC_EDIT3);
 	pBoxFour = (CEdit*)GetDlgItem(IDC_EDIT4);
 
 	// 把明文转换为数字
 	pBoxThree->GetWindowText(str);
-	int m = _wtoi(str);
+	long long m = _wtoi(str);
 
 	// 加密
-	c = pow(m, pubKey);
-	c = c % N;
+	c = Montgomery(m, pubKey, N);
 	str.Format(_T("%d"), c);
 	pBoxFour->SetWindowText(str);
 }
@@ -378,7 +388,7 @@ void CRSA1Dlg::OnBnClickedButtonDecpt()
 	CEdit* pBoxFour;
 	CString str;
 	CString str1;
-	int c,m;
+	long long c,m;
 	pBoxThree = (CEdit*)GetDlgItem(IDC_EDIT3);
 	pBoxFour = (CEdit*)GetDlgItem(IDC_EDIT4);
 
@@ -387,8 +397,7 @@ void CRSA1Dlg::OnBnClickedButtonDecpt()
 	c = _wtoi(str);
 
 	// 解密
-	m = pow(c, priKey);
-	m = m % N;
+	m = repeatMod(c, priKey, N);
 	str1.Format(_T("%d"), m);
 	pBoxThree->SetWindowText(str1);
 }
