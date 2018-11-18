@@ -183,10 +183,6 @@ void CRSA1Dlg::OnCbnSelchangeCombo1()
 
 }
 
-int euclidean_ext(int a, int b, int n)
-{
-	return 11;
-}
 
 // 生成伪素数
 const int MAX_ROW = 50;
@@ -203,7 +199,7 @@ size_t Pseudoprime()
 	{
 		srand((unsigned)time(0));
 		ifprime = true;
-		a = (rand() % 10000) * 2 + 3; //生成一个范围在3到2003里的奇数
+		a = (rand() % 100) * 2 + 3; //生成一个范围在3到2003里的奇数
 		for (int j = 0; j<MAX_ROW; ++j)
 		{
 			if (a%arr[j] == 0)
@@ -265,10 +261,39 @@ bool rabinmiller(size_t n, size_t k)
 }
 
 
+size_t gcd(int a, int b)
+{
+	if (b == 0)
+		return a;
+	else
+		return gcd(b,a%b);
+}
+
+int xx;
+void exgcd(int &x, int& y, int a, int b)
+{
+	if (b == 0)
+	{
+		x = 1;
+		y = 0;
+		return;
+	}
+	exgcd(x, y, b, a%b);
+	xx = x;
+	x = y;
+	y = xx - a / b*y;
+}
+
+
 void CRSA1Dlg::OnClickedButton1()
 {
 	CEdit* pBoxOne;
+	CEdit* pBoxTwo;
+	CEdit* pBoxThree;
 	pBoxOne = (CEdit*)GetDlgItem(IDC_EDIT1);
+	pBoxTwo = (CEdit*)GetDlgItem(IDC_EDIT2);
+	pBoxThree = (CEdit*)GetDlgItem(IDC_EDIT3);
+
 	CComboBox* comboBox = (CComboBox*)GetDlgItem(IDC_COMBO_A);
 	//赋值
 	//pBoxOne-> SetWindowText( _T("FOO ") );
@@ -285,7 +310,6 @@ void CRSA1Dlg::OnClickedButton1()
 	//str.ReleaseBuffer();
 
 	// 获取加密等级
-	//i = euclidean_ext(1, 1, 1);
 	i = comboBox->GetCurSel();
 
 
@@ -296,41 +320,75 @@ void CRSA1Dlg::OnClickedButton1()
 		p = Pseudoprime();
 	}
 	size_t q = Pseudoprime();
-	while (!rabinmiller(q, 10)) {
+	while (!rabinmiller(q,10)) {
 		q = Pseudoprime();
 	}
 
 	// 计算n
 	size_t n = p*q;
+	N = n;
 
-	str.Format(_T("%d"), n);
-	pBoxOne->SetWindowText(str);
 	// 计算欧拉函数
 
 	size_t phi_n = (p - 1)*(q - 1);
 
 	// 选取公钥
-
+	size_t e = 65537;
+	str.Format(_T("%d"), e);
+	pBoxOne->SetWindowText(str);
 
 	// 扩展欧几里得计算私钥
-
+	int x, y;
+	exgcd(x, y, e, phi_n);
+	size_t d = x;
+	pubKey = e;
+	priKey = d;
+	str.Format(_T("%d"), d);
+	pBoxTwo->SetWindowText(str);
 }
 
 
 
 void CRSA1Dlg::OnBnClickedButtonEncpt()
 {
-	// 获取公钥和n
+	// 获取明文
+	CEdit* pBoxThree;
+	CEdit* pBoxFour;
+	CString str;
+	int c;
+	pBoxThree = (CEdit*)GetDlgItem(IDC_EDIT3);
+	pBoxFour = (CEdit*)GetDlgItem(IDC_EDIT4);
+
+	// 把明文转换为数字
+	pBoxThree->GetWindowText(str);
+	int m = _wtoi(str);
 
 	// 加密
-
+	c = pow(m, pubKey);
+	c = c % N;
+	str.Format(_T("%d"), c);
+	pBoxFour->SetWindowText(str);
 }
 
 
 void CRSA1Dlg::OnBnClickedButtonDecpt()
 {
-	// 获取私钥和n
+	// 获取密文
+	CEdit* pBoxThree;
+	CEdit* pBoxFour;
+	CString str;
+	CString str1;
+	int c,m;
+	pBoxThree = (CEdit*)GetDlgItem(IDC_EDIT3);
+	pBoxFour = (CEdit*)GetDlgItem(IDC_EDIT4);
+
+	// 把密文转换成数字
+	pBoxFour->GetWindowText(str);
+	c = _wtoi(str);
 
 	// 解密
-
+	m = pow(c, priKey);
+	m = m % N;
+	str1.Format(_T("%d"), m);
+	pBoxThree->SetWindowText(str1);
 }
