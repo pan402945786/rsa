@@ -11,6 +11,7 @@
 #include <ctime>
 #include <cmath>
 #include <algorithm>
+#include <vector>
 
 #include <time.h>
 
@@ -18,7 +19,7 @@
 #define new DEBUG_NEW
 #endif
 
-
+#define LENGTH 3;
 
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
 
@@ -305,6 +306,238 @@ long long Montgomery(long long base, long long exp, long long mod)
 	}
 	return res;
 }
+enum enumAA { a, b, c, d, e };
+long long charToInt(CString aa)
+{
+	if (aa == "a") {
+		return 11;
+	}
+	else if (aa == "b") {
+		return 12;
+	}
+	else if (aa == "c") {
+		return 13;
+	}
+	else if (aa == "d") {
+		return 14;
+	}
+	else if (aa == "e") {
+		return 15;
+	}
+	else if (aa == "f") {
+		return 16;
+	}
+	else if (aa == "g") {
+		return 17;
+	}
+	else if (aa == "h") {
+		return 18;
+	}
+	else if (aa == "i") {
+		return 19;
+	}
+	else if (aa == "j") {
+		return 20;
+	}
+	else if (aa == "k") {
+		return 21;
+	}
+	else if (aa == "l") {
+		return 22;
+	}
+	else if (aa == "m") {
+		return 23;
+	}
+	else if (aa == "n") {
+		return 24;
+	}
+	else if (aa == "o") {
+		return 25;
+	}
+	else if (aa == "p") {
+		return 26;
+	}
+	else if (aa == "q") {
+		return 27;
+	}
+	else if (aa == "r") {
+		return 28;
+	}
+	else if (aa == "s") {
+		return 29;
+	}
+	else if (aa == "t") {
+		return 30;
+	}
+	else if (aa == "u") {
+		return 31;
+	}
+	else if (aa == "v") {
+		return 32;
+	}
+	else if (aa == "w") {
+		return 33;
+	}
+	else if (aa == "x") {
+		return 34;
+	}
+	else if (aa == "y") {
+		return 35;
+	}
+	else if (aa == "z") {
+		return 36;
+	}
+	else if (aa == "0") {
+		return 0;
+	}
+	else if (aa == "1") {
+		return 1;
+	}
+	else if (aa == "2") {
+		return 2;
+	}
+	else if (aa == "3") {
+		return 3;
+	}
+	else if (aa == "4") {
+		return 4;
+	}
+	else if (aa == "5") {
+		return 5;
+	}
+	else if (aa == "6") {
+		return 6;
+	}
+	else if (aa == "7") {
+		return 7;
+	}
+	else if (aa == "8") {
+		return 8;
+	}
+	else if (aa == "9") {
+		return 9;
+	}
+	else {
+		return 0;
+	}
+}
+
+CString intToChar(long long aa)
+{
+	CString bb;
+	if (aa == 11) {
+		bb = "a";
+	}
+	else if (aa == 12) {
+		bb = "b";
+	}
+	else if (aa == 13) {
+		bb = "c";
+	}
+	else if (aa == 14) {
+		bb = "d";
+	}
+	else if (aa == 15) {
+		bb = "e";
+	}
+	else if (aa == 16) {
+		bb = "f";
+	}
+	else if (aa == 17) {
+		bb = "g";
+	}
+	else if (aa == 18) {
+		bb = "h";
+	}
+	else if (aa == 19) {
+		bb = "i";
+	}
+	else if (aa == 20) {
+		bb = "j";
+	}
+	else if (aa == 21) {
+		bb = "k";
+	}
+	else if (aa == 22) {
+		bb = "l";
+	}
+	else if (aa == 23) {
+		bb = "m";
+	}
+	else if (aa == 24) {
+		bb = "n";
+	}
+	else if (aa == 25) {
+		bb = "o";
+	}
+	else if (aa == 26) {
+		bb = "p";
+	}
+	else if (aa == 27) {
+		bb = "q";
+	}
+	else if (aa == 28) {
+		bb = "r";
+	}
+	else if (aa == 29) {
+		bb = "s";
+	}
+	else if (aa == 30) {
+		bb = "t";
+	}
+	else if (aa == 31) {
+		bb = "u";
+	}
+	else if (aa == 32) {
+		bb = "v";
+	}
+	else if (aa == 33) {
+		bb = "w";
+	}
+	else if (aa == 34) {
+		bb = "x";
+	}
+	else if (aa == 35) {
+		bb = "y";
+	}
+	else if (aa == 36) {
+		bb = "z";
+	}
+	else if (aa == 0) {
+		bb = "0";
+	}
+	else if (aa == 1) {
+		bb = "1";
+	}
+	else if (aa == 2) {
+		bb = "2";
+	}
+	else if (aa == 3) {
+		bb = "3";
+	}
+	else if (aa == 4) {
+		bb = "4";
+	}
+	else if (aa == 5) {
+		bb = "5";
+	}
+	else if (aa == 6) {
+		bb = "6";
+	}
+	else if (aa == 7) {
+		bb = "7";
+	}
+	else if (aa == 8) {
+		bb = "8";
+	}
+	else if (aa == 9) {
+		bb = "9";
+	}
+	else {
+		bb = "";
+	}
+	return bb;
+}
 
 
 void CRSA1Dlg::OnClickedButton1()
@@ -365,19 +598,39 @@ void CRSA1Dlg::OnBnClickedButtonEncpt()
 	// 获取明文
 	CEdit* pBoxThree;
 	CEdit* pBoxFour;
-	CString str;
+	CString str,subStr,aa,cStr;
+	CString* strP;
 	long long c;
+	long long m;
 	pBoxThree = (CEdit*)GetDlgItem(IDC_EDIT3);
 	pBoxFour = (CEdit*)GetDlgItem(IDC_EDIT4);
 
-	// 把明文转换为数字
 	pBoxThree->GetWindowText(str);
-	long long m = _wtoi(str);
+	//m = _wtoi(str);
 
-	// 加密
-	c = Montgomery(m, pubKey, N);
-	str.Format(_T("%d"), c);
-	pBoxFour->SetWindowText(str);
+	// 获取字符串长度
+	strP = &str;
+	int length = strP->GetLength();
+
+	// 把字符串分割
+	int number = length / 1;
+	int mod = length % 1;
+
+	m = 0;
+	cStr = "";
+	for (int i = 0; i < number; i++)
+	{
+		int start;
+		start = i * 1;
+		subStr = str.Mid(start, 1);
+		//m = _wtoi(subStr);
+		m = charToInt(subStr);
+		c = Montgomery(m, pubKey, N);
+		aa.Format(_T("%010d"), c);
+		cStr += aa;
+	}
+
+	pBoxFour->SetWindowText(cStr);
 }
 
 
@@ -387,6 +640,8 @@ void CRSA1Dlg::OnBnClickedButtonDecpt()
 	CEdit* pBoxThree;
 	CEdit* pBoxFour;
 	CString str;
+	CString* strP;
+	CString subStr,aa;
 	CString str1;
 	long long c,m;
 	pBoxThree = (CEdit*)GetDlgItem(IDC_EDIT3);
@@ -394,10 +649,26 @@ void CRSA1Dlg::OnBnClickedButtonDecpt()
 
 	// 把密文转换成数字
 	pBoxFour->GetWindowText(str);
-	c = _wtoi(str);
+	//c = _wtoi(str);
 
-	// 解密
-	m = repeatMod(c, priKey, N);
-	str1.Format(_T("%d"), m);
+
+	// 把字符串分割
+	strP = &str;
+	int length = strP->GetLength();
+	int number = length / 10;
+	int mod = length % 10;
+
+	m = 0;
+	str1 = "";
+	for (int i = 0; i < number; i++)
+	{
+		int start;
+		start = i * 10;
+		subStr = str.Mid(start, 10);
+		c = _wtoi(subStr);
+		m = Montgomery(c, priKey, N);
+		str1 += intToChar(m);
+	}
+
 	pBoxThree->SetWindowText(str1);
 }
