@@ -1,14 +1,14 @@
-﻿  stdafx.cpp
-  RSA1.cpp
-  RSA1Dlg.cpp
-RSA1Dlg.cpp(255): warning C4244: “参数”: 从“__int64”转换到“unsigned int”，可能丢失数据
-RSA1Dlg.cpp(292): warning C4244: “=”: 从“__int64”转换到“int”，可能丢失数据
-RSA1Dlg.cpp(574): warning C4244: “=”: 从“__int64”转换到“std::size_t”，可能丢失数据
-RSA1Dlg.cpp(587): warning C4244: “=”: 从“__int64”转换到“int”，可能丢失数据
-RSA1Dlg.cpp(588): warning C4244: “=”: 从“__int64”转换到“int”，可能丢失数据
-RSA1Dlg.cpp(554): warning C4101: “type”: 未引用的局部变量
+﻿  RSA1Dlg.cpp
+RSA1Dlg.cpp(252): warning C4244: “参数”: 从“__int64”转换到“unsigned int”，可能丢失数据
+RSA1Dlg.cpp(289): warning C4244: “=”: 从“__int64”转换到“int”，可能丢失数据
+RSA1Dlg.cpp(558): warning C4244: “=”: 从“__int64”转换到“std::size_t”，可能丢失数据
+RSA1Dlg.cpp(571): warning C4244: “=”: 从“__int64”转换到“int”，可能丢失数据
+RSA1Dlg.cpp(572): warning C4244: “=”: 从“__int64”转换到“int”，可能丢失数据
+RSA1Dlg.cpp(538): warning C4101: “type”: 未引用的局部变量
   正在生成代码
-  All 205 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  1 of 201 functions ( 0.5%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    12 functions had inline decision re-evaluated but remain unchanged
   已完成代码的生成
   RSA1.vcxproj -> C:\Users\Hainan\documents\visual studio 2015\Projects\RSA1\Release\RSA1.exe
   RSA1.vcxproj -> C:\Users\Hainan\documents\visual studio 2015\Projects\RSA1\Release\RSA1.pdb (Full PDB)

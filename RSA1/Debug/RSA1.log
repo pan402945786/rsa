@@ -1,9 +1,9 @@
 ﻿  RSA1Dlg.cpp
-c:\users\hainan\documents\visual studio 2015\projects\rsa1\rsa1\rsa1dlg.cpp(255): warning C4244: “参数”: 从“__int64”转换到“unsigned int”，可能丢失数据
-c:\users\hainan\documents\visual studio 2015\projects\rsa1\rsa1\rsa1dlg.cpp(292): warning C4244: “=”: 从“__int64”转换到“int”，可能丢失数据
-c:\users\hainan\documents\visual studio 2015\projects\rsa1\rsa1\rsa1dlg.cpp(574): warning C4244: “=”: 从“__int64”转换到“std::size_t”，可能丢失数据
-c:\users\hainan\documents\visual studio 2015\projects\rsa1\rsa1\rsa1dlg.cpp(587): warning C4244: “=”: 从“__int64”转换到“int”，可能丢失数据
-c:\users\hainan\documents\visual studio 2015\projects\rsa1\rsa1\rsa1dlg.cpp(588): warning C4244: “=”: 从“__int64”转换到“int”，可能丢失数据
-c:\users\hainan\documents\visual studio 2015\projects\rsa1\rsa1\rsa1dlg.cpp(554): warning C4101: “type”: 未引用的局部变量
+c:\users\hainan\documents\visual studio 2015\projects\rsa1\rsa1\rsa1dlg.cpp(252): warning C4244: “参数”: 从“__int64”转换到“unsigned int”，可能丢失数据
+c:\users\hainan\documents\visual studio 2015\projects\rsa1\rsa1\rsa1dlg.cpp(289): warning C4244: “=”: 从“__int64”转换到“int”，可能丢失数据
+c:\users\hainan\documents\visual studio 2015\projects\rsa1\rsa1\rsa1dlg.cpp(558): warning C4244: “=”: 从“__int64”转换到“std::size_t”，可能丢失数据
+c:\users\hainan\documents\visual studio 2015\projects\rsa1\rsa1\rsa1dlg.cpp(571): warning C4244: “=”: 从“__int64”转换到“int”，可能丢失数据
+c:\users\hainan\documents\visual studio 2015\projects\rsa1\rsa1\rsa1dlg.cpp(572): warning C4244: “=”: 从“__int64”转换到“int”，可能丢失数据
+c:\users\hainan\documents\visual studio 2015\projects\rsa1\rsa1\rsa1dlg.cpp(538): warning C4101: “type”: 未引用的局部变量
   RSA1.vcxproj -> C:\Users\Hainan\documents\visual studio 2015\Projects\RSA1\Debug\RSA1.exe
   RSA1.vcxproj -> C:\Users\Hainan\documents\visual studio 2015\Projects\RSA1\Debug\RSA1.pdb (Partial PDB)

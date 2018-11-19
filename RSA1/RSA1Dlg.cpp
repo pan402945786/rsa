@@ -19,7 +19,7 @@
 #define new DEBUG_NEW
 #endif
 
-#define LENGTH 3;
+#define LENGTH 10;
 
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
 
@@ -70,9 +70,6 @@ void CRSA1Dlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_EDIT1, edit_1);
-
-	DDX_CBString(pDX, IDC_COMBO_A, RateSelect);
-	DDV_MaxChars(pDX, RateSelect, 99999);
 }
 
 BEGIN_MESSAGE_MAP(CRSA1Dlg, CDialogEx)
@@ -118,15 +115,15 @@ BOOL CRSA1Dlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
-	CComboBox* comboBox = (CComboBox*)GetDlgItem(IDC_COMBO_A);
-	comboBox->AddString(_T("RSA-512"));
-	comboBox->AddString(_T("RSA-768"));
-	comboBox->AddString(_T("RSA-1024"));
-	comboBox->AddString(_T("RSA-2048"));
-	for (int i = 0; i < comboBox->GetCount(); i++)
-	{
-		comboBox->SetItemData(i, i);
-	}
+	//CComboBox* comboBox = (CComboBox*)GetDlgItem(IDC_COMBO_A);
+	//comboBox->AddString(_T("RSA-512"));
+	//comboBox->AddString(_T("RSA-768"));
+	//comboBox->AddString(_T("RSA-1024"));
+	//comboBox->AddString(_T("RSA-2048"));
+	//for (int i = 0; i < comboBox->GetCount(); i++)
+	//{
+	//	comboBox->SetItemData(i, i);
+	//}
 
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
@@ -209,7 +206,7 @@ long long Pseudoprime(long long type)
 	while (!ifprime)
 	{
 		ifprime = true;
-		a = (rand() % type) * 2 + 3; //生成一个范围在3到20003里的奇数
+		a = (rand() % type) * 2 + 3;
 		for (int j = 0; j<MAX_ROW; ++j)
 		{
 			if (a%arr[j] == 0)
@@ -294,19 +291,6 @@ void exgcd(long long &x, long long& y, long long a, long long b)
 	y = xx - a / b*y;
 }
 
-long long Montgomery(long long base, long long exp, long long mod)
-{
-	long long res = 1;
-	while (exp)
-	{
-		if (exp & 1)
-			res = (res*base) % mod;
-		exp >>= 1;
-		base = (base*base) % mod;
-	}
-	return res;
-}
-enum enumAA { a, b, c, d, e };
 long long charToInt(CString aa)
 {
 	if (aa == "a") {
@@ -388,34 +372,34 @@ long long charToInt(CString aa)
 		return 36;
 	}
 	else if (aa == "0") {
-		return 0;
+		return 37;
 	}
 	else if (aa == "1") {
-		return 1;
+		return 38;
 	}
 	else if (aa == "2") {
-		return 2;
+		return 39;
 	}
 	else if (aa == "3") {
-		return 3;
+		return 40;
 	}
 	else if (aa == "4") {
-		return 4;
+		return 41;
 	}
 	else if (aa == "5") {
-		return 5;
+		return 42;
 	}
 	else if (aa == "6") {
-		return 6;
+		return 43;
 	}
 	else if (aa == "7") {
-		return 7;
+		return 44;
 	}
 	else if (aa == "8") {
-		return 8;
+		return 45;
 	}
 	else if (aa == "9") {
-		return 9;
+		return 46;
 	}
 	else {
 		return 0;
@@ -503,34 +487,34 @@ CString intToChar(long long aa)
 	else if (aa == 36) {
 		bb = "z";
 	}
-	else if (aa == 0) {
+	else if (aa == 37) {
 		bb = "0";
 	}
-	else if (aa == 1) {
+	else if (aa == 38) {
 		bb = "1";
 	}
-	else if (aa == 2) {
+	else if (aa == 39) {
 		bb = "2";
 	}
-	else if (aa == 3) {
+	else if (aa == 40) {
 		bb = "3";
 	}
-	else if (aa == 4) {
+	else if (aa == 41) {
 		bb = "4";
 	}
-	else if (aa == 5) {
+	else if (aa == 42) {
 		bb = "5";
 	}
-	else if (aa == 6) {
+	else if (aa == 43) {
 		bb = "6";
 	}
-	else if (aa == 7) {
+	else if (aa == 44) {
 		bb = "7";
 	}
-	else if (aa == 8) {
+	else if (aa == 45) {
 		bb = "8";
 	}
-	else if (aa == 9) {
+	else if (aa == 46) {
 		bb = "9";
 	}
 	else {
@@ -549,7 +533,7 @@ void CRSA1Dlg::OnClickedButton1()
 	pBoxTwo = (CEdit*)GetDlgItem(IDC_EDIT2);
 	pBoxThree = (CEdit*)GetDlgItem(IDC_EDIT3);
 
-	CComboBox* comboBox = (CComboBox*)GetDlgItem(IDC_COMBO_A);
+	//CComboBox* comboBox = (CComboBox*)GetDlgItem(IDC_COMBO_A);
 	CString str;
 	long long i = 100000,type;
 
@@ -606,7 +590,6 @@ void CRSA1Dlg::OnBnClickedButtonEncpt()
 	pBoxFour = (CEdit*)GetDlgItem(IDC_EDIT4);
 
 	pBoxThree->GetWindowText(str);
-	//m = _wtoi(str);
 
 	// 获取字符串长度
 	strP = &str;
@@ -625,7 +608,7 @@ void CRSA1Dlg::OnBnClickedButtonEncpt()
 		subStr = str.Mid(start, 1);
 		//m = _wtoi(subStr);
 		m = charToInt(subStr);
-		c = Montgomery(m, pubKey, N);
+		c = repeatMod(m, pubKey, N);
 		aa.Format(_T("%010d"), c);
 		cStr += aa;
 	}
@@ -649,24 +632,22 @@ void CRSA1Dlg::OnBnClickedButtonDecpt()
 
 	// 把密文转换成数字
 	pBoxFour->GetWindowText(str);
-	//c = _wtoi(str);
-
 
 	// 把字符串分割
 	strP = &str;
 	int length = strP->GetLength();
-	int number = length / 10;
-	int mod = length % 10;
+	int number = length / LENGTH;
+	int mod = length % LENGTH;
 
 	m = 0;
 	str1 = "";
 	for (int i = 0; i < number; i++)
 	{
 		int start;
-		start = i * 10;
+		start = i * LENGTH;
 		subStr = str.Mid(start, 10);
 		c = _wtoi(subStr);
-		m = Montgomery(c, priKey, N);
+		m = repeatMod(c, priKey, N);
 		str1 += intToChar(m);
 	}
 
